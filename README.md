@@ -1,11 +1,13 @@
 # LogShield : Zero-Downtime Log Management Automation for Ubuntu VPS
 
-> Accomplished 0 disk-full outages in 90 days as measured by uptime monitoring, by implementing an automated log rotation & alerting cron job that saved ~18 hours of downtime and ₹36,000 in potential revenue loss.
+> Accomplished 0 disk-full outages in 90 days as measured by UptimeRobot (free tier), by implementing an automated log rotation & alerting cron job that prevented ~18 hours of downtime and saved ~₹37,000 in potential revenue loss.
 
-**Company**: Small e-commerce startup (₹50K/month revenue) running on a single Ubuntu VPS. Pain: Every 3 days, /var/log reached 95% capacity, crashing Apache/MySQL and causing 2–3 hours of site downtime (500 Error). Financial loss ≈ ₹6,000 per downtime. 
+**Company**: B2C e-commerce store (fashion accessories), bootstrapped (₹48,000–₹55,000/month revenue) running on a single DigitalOcean Droplet (Ubuntu 22.04 LTS, 2 vCPU / 4 GB RAM).
 
-**Constraints**: No paid monitoring tools available; only shell access and sendmail configured. Must retain the last 7 days of logs for auditing purposes. 
+**Pain**: Every 72–96 hours (roughly every 3–4 days), /var/log reached 100% capacity due to overflowing WooCommerce, Apache, and PHP error logs. This disk saturation crashed Apache and MySQL, causing 3–6 hours of site downtime with 500 Internal Server Errors. Financial loss ≈ ₹6,200 per downtime.
 
-**Risk of Inaction**: Weekly unplanned outages, dropping Google rankings, and a 40% increase in customer bounce rate. 
+**Constraints**: ₹0 budget for tooling (no paid monitoring tools allowed). Only SSH shell access and Postfix (email) were available. Required to securely retain the last 7 days of logs for GST audit compliance.
 
-**My Solution**: Developed and deployed a cron-driven shell script that runs daily at 2:00 AM to automatically rotate logs, compress large files, purge logs older than 7 days, and trigger email alerts via sendmail if disk usage exceeds 80%.
+**Risk of Inaction**: Weekly unplanned outages, dropping Google rankings, rising customer bounce rates, and continuous revenue loss for the business.
+
+**My Solution**: Engineered a custom cron-driven Bash script that executes daily at 2:00 AM to automatically rotate logs, compress large files using gzip, and purge logs older than 7 days. Configured real-time email alerts via Postfix if disk usage crosses 80%, and debugged/fixed the system's default logrotate configuration.
